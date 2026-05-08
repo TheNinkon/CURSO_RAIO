@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+cd "$(dirname "$0")"
+
+/opt/homebrew/bin/php artisan serve --host=127.0.0.1 --port=8000

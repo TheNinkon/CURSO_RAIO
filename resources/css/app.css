@@ -1,0 +1,175 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+    --page-bg: #0f0f10;
+    --surface-1: #1c1c1c;
+    --surface-2: #262626;
+}
+
+@layer base {
+    html {
+        color-scheme: dark;
+    }
+
+    body {
+        background:
+            radial-gradient(circle at top, rgba(255, 255, 255, 0.06), transparent 28%),
+            linear-gradient(180deg, #151515 0%, var(--page-bg) 100%);
+    }
+
+    ::selection {
+        background: rgba(255, 255, 255, 0.16);
+    }
+}
+
+@utility shadow-card {
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.34);
+}
+
+@layer components {
+    .tab-button {
+        @apply rounded-full border border-white/8 bg-black/15 px-4 py-2 text-sm font-medium text-white/55 transition hover:border-white/14 hover:text-white;
+    }
+
+    .tab-button.is-active {
+        @apply border-white bg-white text-[#111111];
+    }
+
+    .tab-panel {
+        @apply animate-[fade-in_180ms_ease-out];
+    }
+
+    .plyr {
+        --plyr-color-main: #ffffff;
+        --plyr-video-control-background-hover: rgba(255, 255, 255, 0.18);
+        --plyr-menu-background: rgba(20, 20, 20, 0.94);
+        --plyr-menu-color: rgba(255, 255, 255, 0.92);
+        --plyr-control-radius: 999px;
+        --plyr-tooltip-background: rgba(18, 18, 18, 0.95);
+        --plyr-tooltip-color: #ffffff;
+        --plyr-video-controls-background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.82));
+        --plyr-range-fill-background: #ffffff;
+        --plyr-audio-controls-background: rgba(12, 12, 12, 0.92);
+        --plyr-audio-control-color: #ffffff;
+        --plyr-audio-control-color-hover: #111111;
+        --plyr-audio-control-background-hover: #ffffff;
+        --plyr-audio-progress-buffered-background: rgba(255, 255, 255, 0.22);
+        --plyr-audio-range-track-background: rgba(255, 255, 255, 0.18);
+        --plyr-video-control-color: #ffffff;
+        --plyr-captions-background: rgba(0, 0, 0, 0.72);
+        --plyr-captions-text-color: #ffffff;
+        border-radius: 1.5rem;
+    }
+
+    .plyr--full-ui input[type='range'] {
+        color: #ffffff;
+    }
+
+    .plyr--audio {
+        background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03)),
+            rgba(6, 6, 6, 0.72);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .plyr--audio .plyr__controls {
+        background: rgba(12, 12, 12, 0.92);
+        color: #ffffff;
+    }
+
+    .plyr--audio .plyr__control {
+        color: #ffffff;
+    }
+
+    .plyr--audio .plyr__time {
+        color: rgba(255, 255, 255, 0.78);
+    }
+
+    .plyr--audio .plyr__progress__buffer {
+        color: rgba(255, 255, 255, 0.22);
+    }
+
+    .player-action-button {
+        @apply inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-black/30 text-white/82 transition hover:border-white/18 hover:bg-black/40 hover:text-white;
+    }
+
+    .player-action-button.is-active {
+        @apply border-white/20 bg-white text-[#111111];
+    }
+
+    .player-action-button svg {
+        @apply h-5 w-5;
+    }
+
+    .course-layout {
+        transition: max-width 180ms ease, grid-template-columns 180ms ease, gap 180ms ease;
+    }
+
+    .course-layout.is-theater-mode {
+        max-width: none;
+        width: min(100vw - 2rem, 1720px);
+        gap: 0;
+    }
+
+    .course-layout.is-theater-mode > :first-child {
+        width: 100%;
+    }
+
+    .course-layout.is-theater-mode [data-player-shell] {
+        box-shadow: 0 30px 110px rgba(0, 0, 0, 0.5);
+        width: 100%;
+    }
+
+    .course-layout.is-theater-mode [data-theater-secondary],
+    .course-layout.is-theater-mode .course-curriculum {
+        display: none;
+    }
+
+    .audio-player-card {
+        background:
+            radial-gradient(circle at top left, rgba(255, 255, 255, 0.08), transparent 34%),
+            linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.015));
+    }
+
+    @media (min-width: 1024px) {
+        .course-layout.is-theater-mode {
+            grid-template-columns: minmax(0, 1fr);
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .course-layout.is-theater-mode [data-player-shell] {
+            transform: translateY(-2px);
+        }
+
+        .course-layout.is-theater-mode .course-curriculum {
+            display: none;
+        }
+    }
+}
+
+body.is-theater-mode {
+    background:
+        radial-gradient(circle at top, rgba(255, 255, 255, 0.04), transparent 26%),
+        linear-gradient(180deg, #101010 0%, #050505 100%);
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
